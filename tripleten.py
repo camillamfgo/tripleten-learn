@@ -113,3 +113,163 @@ for movie in movies_info:
 
 for movie in movies_filtered:
     print(movie) 
+
+
+'''Tarefa 1
+O Banco ABC criou uma nova Conta Elite feita sob medida para clientes de alto rendimento líquido que ganham mais de $200.000 anualmente. 
+Escreva um código que itere sobre os clientes, verifique se a receita anual de cada
+um excede US$ 200.000 e adicione os clientes qualificados à sublista elite_clients, 
+que representa a lista de clientes ricos. Por fim, imprima a variável elite_clients.'''
+
+    clients = [
+    [32456, "Jack Wilson", 32, 150000, "Healthcare"],
+    [34591, "Nina Brown", 45, 250000, "Telecom"],
+    [37512, "Alex Smith", 39, 210000, "IT"],
+    [39591, "Brian Perez", 29, 340000, "Transportation"],
+    [45123, "Sarah Lee", 28, 120000, "Marketing"],
+    [47635, "David Kim", 36, 180000, "Finance"],
+    [49571, "Samantha Chen", 42, 220000, "Retail"],
+    [50391, "Juan Rodriguez", 31, 160000, "Architecture"]
+]
+
+elite_clients = [] # adicione clientes elite aqui
+parametro = 200000
+
+for client in clients:
+    if client[3] > parametro:
+        elite_clients.append(client)
+        
+print(elite_clients)
+
+
+'''Tarefa 2
+O departamento de marketing quer uma lista de todos os clientes do banco, 
+divididos em quatro segmentos de contas. Eles pediram que você crie essa lista. 
+Divida todos os clientes do Banco ABC em quatro segmentos: conta Standard para 
+clientes com receita inferior a $100.000 (excluindo esse número), conta Plus para 
+receitas de US$ 100.000 (incluindo esse número) a US$ 200.000 (excluindo esse número),
+conta Elite para receitas de US$ 200.000 (incluindo esse número) a US$ 300.000 
+(excluindo esse número) e conta Executive para receitas de US$ 300.000 
+(incluindo esse número) ou mais.
+
+No pré-código abaixo, você vai encontrar quatro variáveis com as listas: standard, 
+plus, elite e executive. Escreva o código para iterar sobre os clientes, verifique em 
+qual categoria a receita se enquadra e adicione-os a uma lista apropriada. 
+Quando terminar, imprima a lista de clientes Executive.'''
+
+clients = [
+    [32456, "Jack Wilson", 32, 150000, "Healthcare"],
+    [34591, "Nina Brown", 45, 250000, "Telecom"],
+    [37512, "Alex Smith", 39, 210000, "IT"],
+    [39591, "Brian Perez", 29, 340000, "Transportation"],
+    [45123, "Sarah Lee", 28, 120000, "Marketing"],
+    [47635, "David Kim", 36, 180000, "Finance"],
+    [49571, "Samantha Chen", 42, 220000, "Retail"],
+    [50391, "Juan Rodriguez", 31, 160000, "Architecture"],
+    [34556, "Lucas Hernandez", 37, 75000, "Education"],
+    [64291, "Jessica Li", 25, 125000, "IT"],
+    [74512, "Emma Davis", 47, 197000, "Finance"],
+    [83191, "Sophia Perez", 34, 225000, "Transportation"],
+    [91023, "Liam Kim", 29, 98000, "Retail"],
+    [96435, "Ava Chen", 31, 175000, "Marketing"],
+    [100571, "Noah Rodriguez", 28, 85000, "Architecture"],
+    [101321, "Olivia Wilson", 44, 310000, "Telecom"],
+    [104556, "William Brown", 38, 289000, "Finance"],
+    [105491, "Emily Smith", 29, 193000, "Healthcare"],
+    [107512, "Michael Perez", 53, 415000, "Transportation"]
+]
+
+# listas vazias para adicionar clientes
+standard = []
+plus = []
+elite = []
+executive = []
+
+for client in clients:
+    if client[3] < 100000:
+        standard.append(client)
+    elif 100000 <= client[3] < 200000:
+        plus.append(client)
+    elif 200000 <= client[3] < 300000:
+        elite.append(client)
+    else:
+        executive.append(client)
+
+
+print(executive)
+
+
+
+'''Tarefa 3
+É o Dia da Juventude, e a equipe de marketing deseja enviar um e-mail direcionado aos 
+nossos clientes jovens.
+
+Para melhorar a solução anterior, precisamos atualizar os critérios de idade para 
+identificação de clientes jovens.
+
+Atualizamos o código anterior com as novas categorias de jovens.
+No entanto, será necessário adicionar os filtros de idade ao filtro anterior de renda 
+para que tudo funcione como esperado.
+
+As regras são as seguintes:
+
+standard_young:
+Renda anual inferior a $ 100.000 (excluindo esse número) E idade inferior a 40 anos
+(excluindo esse número).
+
+plus_young:
+Renda anual de $ 100.000 (incluindo esse número) a $ 200.000 (excluindo esse número) 
+E idade inferior a 35 anos (excluindo esse número).
+
+elite_young:
+Renda anual de $ 200.000 (incluindo esse número) a $ 300.000 (excluindo esse número)
+E idade inferior a 35 anos (excluindo esse número).
+
+executive_young:
+Renda anual a partir de $ 300.000 (incluindo esse número) E idade inferior a 35 anos 
+(excluindo esse número).
+
+Forneça listas atualizadas com base nessas regras e reimprima apenas a lista de 
+clientes executive_young.
+
+O comentário no pré-código abaixo vai guiar você nas alterações necessárias. 
+Preste atenção nele. Se tiver dificuldades, confira a dica que preparamos.'''
+
+clients = [
+    [32456, "Jack Wilson", 32, 150000, "Healthcare"],
+    [34591, "Nina Brown", 45, 250000, "Telecom"],
+    [37512, "Alex Smith", 39, 210000, "IT"],
+    [39591, "Brian Perez", 29, 340000, "Transportation"],
+    [45123, "Sarah Lee", 28, 120000, "Marketing"],
+    [47635, "David Kim", 36, 180000, "Finance"],
+    [49571, "Samantha Chen", 42, 220000, "Retail"],
+    [50391, "Juan Rodriguez", 31, 160000, "Architecture"],
+    [34556, "Lucas Hernandez", 37, 75000, "Education"],
+    [64291, "Jessica Li", 25, 125000, "IT"],
+    [74512, "Emma Davis", 47, 197000, "Finance"],
+    [83191, "Sophia Perez", 34, 225000, "Transportation"],
+    [91023, "Liam Kim", 29, 98000, "Retail"],
+    [96435, "Ava Chen", 31, 175000, "Marketing"],
+    [100571, "Noah Rodriguez", 28, 85000, "Architecture"],
+    [101321, "Olivia Wilson", 44, 310000, "Telecom"],
+    [104556, "William Brown", 38, 289000, "Finance"],
+    [105491, "Emily Smith", 29, 193000, "Healthcare"],
+    [107512, "Michael Perez", 53, 415000, "Transportation"]
+]
+
+standard_young = []
+plus_young = []
+elite_young = []
+executive_young = []
+
+for client in clients:
+    if client[3] < 100000 and client[2] < 40:
+        standard_young.append(client)
+    elif client[3] < 200000 and client[2] < 35:
+        plus_young.append(client)
+    elif client[3] < 300000 and client[2] < 35:
+        elite_young.append(client)
+    elif client[3] >= 300000 and client[2] < 35:
+        executive_young .append(client)
+
+print(executive_young)
