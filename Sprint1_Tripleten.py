@@ -121,7 +121,7 @@ Escreva um código que itere sobre os clientes, verifique se a receita anual de 
 um excede US$ 200.000 e adicione os clientes qualificados à sublista elite_clients, 
 que representa a lista de clientes ricos. Por fim, imprima a variável elite_clients.'''
 
-    clients = [
+clients = [
     [32456, "Jack Wilson", 32, 150000, "Healthcare"],
     [34591, "Nina Brown", 45, 250000, "Telecom"],
     [37512, "Alex Smith", 39, 210000, "IT"],
@@ -273,3 +273,10 @@ for client in clients:
         executive_young .append(client)
 
 print(executive_young)
+
+
+for user in users:
+    name = ''
+    for purchase_category in user[3]:
+        if purchase_category == 'clothes':
+            print(f'Nome {user[1][0]} {user[1][1]} que tem {user[2]} anos') #escreva seu código aqui
