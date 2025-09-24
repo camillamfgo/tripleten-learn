@@ -211,3 +211,120 @@ movies_info = [
 # abaixo há duas chamadas das funções: uma para filtrar os dados e outra para imprimir o resultado
 movies_filtered = filter_by_year(movies_info, 1990)
 print_movie_info(movies_filtered)
+
+
+'''Tarefa 1 - lição prática - cap3 - springt2
+Vamos começar escrevendo uma função chamada filter_clients para filtrar a lista de clientes por área de 
+trabalho. A função vai receber dois parâmetros: clients_list (a lista de clientes) e field (o campo com a
+ área de trabalho que a função precisa encontrar). A função vai iterar sobre cada cliente na lista, e se 
+ ela encontrar o cliente com a área de trabalho especificada na lista, a informação sobre o cliente será 
+ adicionada a uma nova lista. Essa lista será retornada como resultado da execução da função quando ela 
+ finalizar sua execução.
+
+Chame a função para a área "Transportation", para fazer um teste. Em seguida, imprima a lista filtrada (
+já no pré-código).'''
+
+clients = [
+    [32456, "Jack Wilson", 32, 150000, "Healthcare"],
+    [34591, "Nina Brown", 45, 250000, "Telecom"],
+    [37512, "Alex Smith", 39, 210000, "IT"],
+    [39591, "Brian Perez", 29, 340000, "Transportation"],
+    [45123, "Sarah Lee", 28, 120000, "Marketing"],
+    [47635, "David Kim", 36, 180000, "Finance"],
+    [49571, "Samantha Chen", 42, 220000, "Retail"],
+    [50391, "Juan Rodriguez", 31, 160000, "Architecture"],
+    [34556, "Lucas Hernandez", 37, 75000, "Education"],
+    [64291, "Jessica Li", 25, 125000, "IT"],
+    [74512, "Emma Davis", 47, 197000, "Finance"],
+    [83191, "Sophia Perez", 34, 225000, "Transportation"],
+    [91023, "Liam Kim", 29, 98000, "Retail"],
+    [96435, "Ava Chen", 31, 175000, "Marketing"],
+    [100571, "Noah Rodriguez", 28, 85000, "Architecture"],
+    [101321, "Olivia Wilson", 44, 310000, "Telecom"],
+    [104556, "William Brown", 38, 289000, "Finance"],
+    [105491, "Emily Smith", 29, 193000, "Healthcare"],
+    [107512, "Michael Perez", 53, 415000, "Transportation"]
+]
+
+clients_list = clients
+
+def filter_clients(clients_list,field):
+    filtered_list=[]
+    for client in clients_list:
+        if client[4] == field:
+            filtered_list.append(client)
+    return filtered_list# crie sua função filter_clients aqui
+
+filtered_list = filter_clients(clients_list,'Transportation')
+
+  # imprimimos o resultado aqui
+print(filtered_list)
+
+
+'''Tarefa 2 - lição prática - cap3 - sprint2
+
+Vamos torná-la ainda mais flexível! Escreva mais duas funções similares à anterior que chamamos:
+
+filter_age() e
+filter_income()
+
+Na primeira função, usaremos a idade como o filtro, enquanto na segunda, vamos usar a renda como o filtro.
+
+A lista clients deve ser usada como argumento para o parâmetro clients_list em ambas as funções, de forma 
+parecida ao que você fez na tarefa anterior.
+
+Ambas as funções devem filtrar os clientes com valores maiores do que o valor passado como um argumento 
+na chamada da função.
+
+Chame a função filter_age() e filtre a lista clients, extraindo os clientes que tenham mais de 40 anos. 
+Armazene os resultados na variável filtered_age. 
+
+Da mesma forma, chame a função filter_income() e filtre a lista clients, extraindo apenas os clientes que 
+tenham uma renda maior que 250.000. Salve os resultados na variável filtered_income.
+
+Imprima as variáveis filtered_age e filtered_income (que já estão no pré-código).'''
+
+clients = [
+    [32456, "Jack Wilson", 32, 150000, "Healthcare"],
+    [34591, "Nina Brown", 45, 250000, "Telecom"],
+    [37512, "Alex Smith", 39, 210000, "IT"],
+    [39591, "Brian Perez", 29, 340000, "Transportation"],
+    [45123, "Sarah Lee", 28, 120000, "Marketing"],
+    [47635, "David Kim", 36, 180000, "Finance"],
+    [49571, "Samantha Chen", 42, 220000, "Retail"],
+    [50391, "Juan Rodriguez", 31, 160000, "Architecture"],
+    [34556, "Lucas Hernandez", 37, 75000, "Education"],
+    [64291, "Jessica Li", 25, 125000, "IT"],
+    [74512, "Emma Davis", 47, 197000, "Finance"],
+    [83191, "Sophia Perez", 34, 225000, "Transportation"],
+    [91023, "Liam Kim", 29, 98000, "Retail"],
+    [96435, "Ava Chen", 31, 175000, "Marketing"],
+    [100571, "Noah Rodriguez", 28, 85000, "Architecture"],
+    [101321, "Olivia Wilson", 44, 310000, "Telecom"],
+    [104556, "William Brown", 38, 289000, "Finance"],
+    [105491, "Emily Smith", 29, 193000, "Healthcare"],
+    [107512, "Michael Perez", 53, 415000, "Transportation"]
+]
+
+# escreva duas funções de filtragem aqui: filter_age e filter_income
+def filter_age(clients_list,age):
+    filtered_age = []
+    for client in clients_list:
+        if client[2] > age:
+            filtered_age.append(client)
+    return filtered_age
+    
+def filter_income(clients_list,income):
+    filtered_income = []
+    for client in clients_list:
+        if client[3] > income:
+            filtered_income.append(client)
+    return filtered_income  
+
+
+filtered_age = filter_age(clients,40)# chame a função filter_age aqui
+filtered_income = filter_income(clients,250000) # chame a função filter_income aqui
+
+# imprime o resultado
+print(filtered_age)
+print(filtered_income)
