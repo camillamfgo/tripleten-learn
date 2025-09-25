@@ -186,7 +186,7 @@ lançamento. A nova função deve ter dois parâmetros:
 
 data= — os dados dos filmes
 year= — o critério de filtragem com base em um ano
-A função deve retornar uma lista de listas que contenham apenas os filmes lançados após year='''.
+A função deve retornar uma lista de listas que contenham apenas os filmes lançados após year='''
 
 def filter_by_year(data,year):
     movies_filtered = []
