@@ -328,3 +328,570 @@ filtered_income = filter_income(clients,250000) # chame a função filter_income
 # imprime o resultado
 print(filtered_age)
 print(filtered_income)
+
+
+'''CAPÍTULO 04
+
+LIÇÃO 03
+
+Tarefa 01
+Importe pandas de forma que a biblioteca possa ser acessada utilizando pd. Crie uma lista aninhada, 
+music, com quatro elementos. Cada sublista deve armazenar dois valores string — artista e nome da música:
+
+'Bob Dylan' — 'Like A Rolling Stone'
+'John Lennon' — 'Imagine'
+'The Beatles' — 'Hey Jude'
+'Nirvana' — 'Smells Like Teen Spirit' '''
+
+import pandas as pd 
+
+music = [
+    ['Bob Dylan','Like A Rolling Stone'],
+    ['John Lennon','Imagine'],
+    ['The Beatles','Hey Jude'],
+    ['Nirvana','Smells Like Teen Spirit']
+]
+
+print(music)
+
+
+'''Tarefa 2
+Crie uma lista chamada entries com dois elementos: os nomes das colunas 'artist' e 'track'. 
+Em seguida, use a classe DataFrame() para criar uma tabela a partir das listas music e entries. 
+Armazene o resultado na variável playlist e o imprima.'''
+
+import pandas as pd
+
+music = [
+    ['Bob Dylan', 'Like A Rolling Stone'],
+    ['John Lennon', 'Imagine'],
+    ['The Beatles', 'Hey Jude'],
+    ['Nirvana', 'Smells Like Teen Spirit'],
+]
+
+entries = ['artist','track']
+
+playlist = pd.DataFrame(data=music , columns=entries)
+
+print(playlist)
+
+
+
+'''LIÇÃO 5'''
+
+'''Tarefa 1
+Escreva o código que recupera o nome da música da 8ª linha do conjunto de dados. Os nomes das músicas 
+estão localizados na coluna 'track'. Atribua o valor obtido à variável result e imprima-o.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+result = df.loc[7,'track']
+print(result)
+
+
+'''Tarefa 2
+Agora vamos praticar a indexação.
+
+Fatie o DataFrame df, extraindo todos os valores para a coluna 'genre' entre a terceira e a décima
+primeira linha. 
+Armazene os valores extraídos na variável index_res e imprima-os.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+index_res = df.loc[2:10,'genre']# Escreva seu código aqui
+
+print(index_res)
+
+
+'''Tarefa 3
+Divida o DataFrame df, extraindo as células da 6ª linha para as colunas entre 'total play' e 'genre'.
+Armazene os valores extraídos na variável index_res e imprima-os.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+index_res = df.loc[5, 'total play': 'genre']
+
+print(index_res)
+
+
+'''Tarefa 4
+É hora de ver como a notação abreviada funciona na prática.
+
+Selecione a coluna 'user_id' do DataFrame df usando a notação abreviada e armazene-a na variável 
+index_res. 
+Imprima index_res no final.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+index_res = df['user_id']# Escreva seu código aqui
+
+print(index_res)
+
+
+'''Tarefa 5
+Obtenha as colunas 'user_id' e 'track' do DataFrame df usando a notação abreviada e armazene-as na 
+variável index_res. 
+Imprima index_res no final.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+index_res = df[['user_id','track']]# Escreva seu código aqui
+
+print(index_res)
+
+
+'''Tarefa 6
+Extraia da linha 10 à linha 20 do DataFrame df usando notação abreviada e armazene o 
+resultado na variável index_res. 
+Imprima index_res no final.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+index_res = df[9:20]# Escreva seu código aqui
+
+print(index_res)
+
+
+
+'''LIÇÃO 6'''
+
+'''Tarefa 1
+Vamos praticar um pouco agora.
+
+Use a indexação lógica para filtrar o DataFrame armazenado na variável df.
+A tabela resultante deve conter apenas linhas com 'genre' igual a 'jazz'. 
+Armazene a tabela filtrada na variável jazz_df e imprima-a.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+jazz_df = df.loc[df.loc[:,'genre'] == 'jazz']# Escreva seu código aqui
+
+print(jazz_df)
+
+
+
+'''Tarefa 2
+Agora vamos usar a indexação lógica para filtrar o DataFrame novamente.
+Filtre a tabela original para incluir apenas as músicas com 'total play' superior a 90 segundos.
+Armazene a tabela filtrada na variável high_total_play_df e imprima-a.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+high_total_play_df = df.loc[df['total play'] > 90]# Escreva seu código aqui
+
+print(high_total_play_df)
+
+
+
+'''LIÇÃO7'''
+
+'''Tarefa 1
+Em cenários da vida real, as empresas costumam ter perguntas específicas que exigem respostas.
+Por exemplo, uma empresa talvez precise analisar os dados de um usuário específico com o 'user_id' igual 
+a '5D9AAD37'.
+
+Vamos fazer isso agora. Para conseguir isso, você precisa filtrar a tabela para extrair apenas as linhas 
+relevantes para o usuário ('5D9AAD37'). Em seguida, pediremos que você calcule a duração média das músicas que esse usuário reproduziu. 
+Essas informações são armazenadas na coluna 'total play'. 
+Após calcular, armazene os resultados na variável user_mean_dur e a imprima.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+user_mean_dur = df[df['user_id'] == '5D9AAD37']['total play'].mean()
+
+print(user_mean_dur)
+
+
+'''Tarefa 2
+Escreva o código para contar o número de músicas para as quais 'Aura' é o artista. 
+Você vai precisar da coluna 'Artist' para fazer isso. 
+Armazene o resultado na variável aura_count. 
+Não se esqueça de imprimir este número.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+aura_count = df[df['Artist'] == 'Aura']['Artist'].count()
+
+print(aura_count)
+
+
+'''Tarefa 3
+Escreva código para calcular o número total de segundos que nossos usuários ouviram as músicas do 
+artista 'Zodiac'. 
+Armazene o resultado na variável zodiac_total e imprima-o.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+zodiac_total = df[df['Artist'] == 'Zodiac']['total play'].sum()
+
+print(zodiac_total)
+
+
+
+'''
+LIÇÃO PRÁTICA - CAPÍTULO 4
+
+Crie uma lista de listas intituladas state_animals. Cada lista contém dois valores string: o nome de um 
+estado e seu animal correspondente. A lista state_animals deve ter dez elementos.
+
+Em seguida, crie uma lista chamada col_names com dois elementos: os nomes das colunas 'state' e 'animal'.
+
+A etapa final é criar um DataFrame com state_animals como valores e col_names como nomes das colunas. 
+Armazene este DataFrame na variável df e imprima-o.
+
+'Alabama' — 'black bear'
+'Alaska' — 'moose'
+'Arizona' — 'ringtail'
+'Arkansas' — 'white-tailed deer'
+'California' — 'grizzly bear'
+'Colorado' — 'rocky Mt. bighorn sheep'
+'Connecticut' — 'sperm whale'
+'Delaware' — 'gray fox'
+'Florida' — 'manatee'
+'Georgia' — 'white-tailed deer'
+'''
+
+import pandas as pd
+
+state_animals= [
+    ['Alabama','black bear'],
+	['Alaska','moose'],
+	['Arizona','ringtail'],
+	['Arkansas','white-tailed deer'],
+	['California','grizzly bear'],
+	['Colorado','rocky Mt. bighorn sheep'],
+	['Connecticut','sperm whale'],
+	['Delaware','gray fox'],
+	['Florida','manatee'],
+	['Georgia','white-tailed deer']
+]
+
+col_names = ['state','animal']# Escreva seu código aqui
+
+df = pd.DataFrame(data=state_animals , columns=col_names)
+
+print(df)
+
+
+'''Vamos praticar a indexação do DataFrame usando o conjunto de dados music_log_chpt_11.csv que vimos antes. 
+Seu objetivo é usar a notação .loc[] para extrair as linhas 2 a 600 para as colunas do DataFrame Artist e 
+track. 
+Armazene a fatia extraída na variável sliced e imprima-a.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_chpt_11.csv')
+
+sliced = df.loc[1:599,['Artist','track']] # Escreva seu código aqui
+
+print(sliced)
+
+
+'''
+CAPÍTULO 05
+
+LIÇÃO 03 - Renomear colunas
+
+
+Tarefa 1
+Agora é sua vez de praticar!
+
+Primeiro, você precisa saber se algo está errado com os nomes das colunas e o que exatamente está errado. 
+Então comece imprimindo os nomes das colunas da tabela df.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+print(df.columns)
+
+
+'''Tarefa 2
+Você deve ter identificado três problemas nos nomes das colunas ' user_id', 'total play' e 'Artist'. 
+Então vá em frente e corrija-os.
+
+Renomeie as três colunas a seguir em df:
+
+'  user_id' → 'user_id'
+'total play' → 'total_play'
+'Artist' → 'artist'
+Crie um dicionário com os nomes antigos e novos das colunas e então chame o método rename() em df e passe 
+seu dicionário para ele.
+
+No dicionário, use os nomes das colunas antigas como chaves e as novas como valores.
+
+Em seguida, imprima o atributo columns de df para confirmar que as alterações foram aplicadas.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+df_new = pd.read_csv('/datasets/music_log_raw.csv')
+
+columns = [' user_id','total play','Artist']
+
+columns_new = {
+    '  user_id':'user_id',
+    'total play':'total_play',
+    'Artist':'artist'
+}
+
+df = df.rename(columns = columns_new) #método rename com reatribuição
+print(df.columns)
+
+df_new.rename(columns=columns_new,inplace = True) #método rename sem reatribuição, apenas com a especificação do parâmetro inplace como True.
+print(df_new.columns)
+
+'''
+Tarefa 3
+Agora queremos que você faça a mesma renomeação, mas usando 3 métodos de string: strip(), lower() e 
+replace(). Coloque os novos nomes das colunas na lista new_col_names.
+
+Em seguida, imprima o atributo columns de df para confirmar que as alterações foram aplicadas.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+new_col_names = []
+
+for columns in df.columns:
+    name_stripped = columns.strip()
+    name_lowered = name_stripped.lower()
+    name_replaced = name_lowered.replace(' ','_')
+    new_col_names.append(name_replaced)
+df.columns = new_col_names
+
+print(df.columns)
+
+
+
+'''
+CAPÍTULO 05
+
+LIÇÃO 04 - Processamento de valores ausentes
+
+Tarefa 1
+Escreva um código que some o número de valores ausentes em todas as colunas do conjunto de dados. 
+Armazene o resultado na variável mis_val e imprima-o.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+mis_val = df.isna().sum()# Escreva seu código aqui
+
+print(mis_val)
+
+
+''' 
+  Tarefa 2
+Escreva código para percorrer as colunas genre, Artist e track do DataFrame df e substitua todos os 
+valores ausentes pela string 'no_info'. A lista de colunas a serem substituídas está armazenada na 
+variável columns_to_replace.
+
+Após realizar as substituições, verifique novamente o número de valores ausentes usando isna().sum()
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+columns_to_replace = ['genre', 'Artist', 'track']
+
+for col in columns_to_replace:
+	df[col].fillna('no_info',inplace=True)# Escreva seu código aqui
+
+print(df.isna().sum())
+
+
+''' 
+Tarefa 3
+Agora vamos remover NaNs na coluna total play substituindo-os por 0.
+
+Após realizar as substituições, verifique novamente o número de valores ausentes usando isna().sum()
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+df['total play'].fillna(0,inplace=True)
+
+print(df.isna().sum())
+
+
+
+'''
+CAPÍTULO 05
+
+LIÇÃO 05 - Processamento de valores duplicados
+
+Tarefa 1
+No trecho de código abaixo, você encontrará a variável pop, que armazena um DataFrame filtrado contendo 
+apenas músicas pop. Seu objetivo é determinar o número de duplicados neste DataFrame e armazenar este 
+valor na variável duplicates. 
+E, finalmente, imprima esta variável.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+pop = df[df['genre'] == 'pop']
+
+duplicates = pop.duplicated().sum()# Escreva seu código aqu
+
+print(duplicates)
+
+
+''' 
+Tarefa 2
+Usando os dados da tarefa anterior, agora precisamos descartar as linhas duplicadas do DataFrame pop. 
+O DataFrame resultante deve ser armazenado na mesma variável pop. Depois de limpar o DataFrame, 
+verifique novamente o número de duplicados e imprima esse número.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+pop = df[df['genre'] == 'pop']
+
+pop = pop.drop_duplicates()# Escreva seu código aqui
+
+print(pop.duplicated().sum())
+
+
+''' 
+Tarefa 3
+Chegou a hora de verificar o número de valores únicos na coluna 'Artist'. Armazene os valores únicos 
+na variável pop_artists. 
+O número de artistas únicos deve ser posto na variável n_artists. Imprima ambas as variáveis.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_raw.csv')
+
+pop = df[df['genre'] == 'pop']
+
+pop_artists = pop['Artist'].unique()# Escreva seu código aqui
+n_artists = pop['Artist'].nunique()# Escreva seu código aqui
+
+print(pop_artists)
+print(n_artists)
+
+
+
+'''CAPÍTULO 05
+
+LIÇÃO 06 - Agrupamento de dados
+
+Tarefa 1
+Vamos dar mais uma olhada no nosso conjunto de dados de música e agrupá-lo de maneira semelhante à que 
+fizemos com os exoplanetas. 
+É importante observar que o agrupamento é geralmente executado em um conjunto de dados tratado, 
+que não possui NaNs, duplicados ou nomes de coluna não formatados. Portanto, não usaremos o conjunto de 
+dados music_log_raw.csv original e, em vez disso, usaremos o conjunto de dados pré-processado com todos
+ os problemas eliminados.
+
+A primeira etapa é agrupar o conjunto de dados por 'genre'. Quando o agrupamento for aplicado, 
+armazene o resultado na variável genre_groups e imprima seu tipo.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_processed.csv')
+
+genre_groups = df.groupby('genre')# Escreva seu código aqui
+
+print(type(genre_groups))
+
+
+'''Tarefa 2
+Agora vamos passar para o ambiente de aplicação e aplicar métodos computacionais a cada grupo. 
+Lembre-se de que, eventualmente, queremos calcular o tempo total. Quando queremos encontrar o tempo total,
+o método que precisamos aplicar deve nos dar uma soma como resultado. Aplique ao pré-código abaixo o 
+método apropriado (quando for adicionada, a variável genre_groups vai armazenar um DataFrame com o resultado). 
+Quando terminar, imprima a variável genre_groups.'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_processed.csv')
+
+genre_groups = df.groupby('genre').sum() # aplique o método apropriado aqui
+
+print(genre_groups)
+
+
+''' 
+Tarefa 3
+Nosso passo final é combinar os resultados. Não se esqueça, queremos calcular o tempo total que nossos 
+ouvintes passaram ouvindo cada gênero. Temos uma coluna 'total_play' em nosso conjunto de dados que
+ contém exatamente o que precisamos. Precisamos passar isso para o nosso agrupamento: primeiro, selecione 
+ a coluna e então aplique um método que calcule o tempo total.
+
+Faça isso e imprima o resultado final.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_processed.csv')
+
+genre_groups = df.groupby('genre')['total_play'].sum()# Escreva seu código aqui
+
+print(genre_groups)
+
+
+
+'''CAPÍTULO 05
+
+LIÇÃO 07 - Ordenamento de dados
+
+Tarefa 1
+Tarefa 1
+Na lição anterior, você agrupou nossos dados music_log_processed.csv por 'genre' e calculou o tempo total
+que nossos ouvintes passaram ouvindo cada gênero. 
+O resultado para cada 'genre', temos o tempo total ouvido. Ele está armazenado na variável time_by_genre 
+no pré-código.
+
+Agora, vamos ordenar os resultados por ordem decrescente e ver os 10 principais gêneros que nossos 
+ouvintes mais ouviram. Faça isso e salve os resultados na variável time_by_genre_sort.
+
+Observe que para esta tarefa, você não precisa especificar a coluna pela qual os dados precisam ser 
+ordenados, já que há apenas uma coluna na variável time_by_genre.
+'''
+
+import pandas as pd
+
+df = pd.read_csv('/datasets/music_log_processed.csv')
+
+time_by_genre = df.groupby('genre')['total_play'].sum()
+
+time_by_genre_sort = time_by_genre.sort_values(ascending=False) # Escreva seu código aqui
+
+print(time_by_genre_sort.head(10))
+
+
