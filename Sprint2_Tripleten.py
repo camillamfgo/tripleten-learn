@@ -871,7 +871,6 @@ print(genre_groups)
 LIÇÃO 07 - Ordenamento de dados
 
 Tarefa 1
-Tarefa 1
 Na lição anterior, você agrupou nossos dados music_log_processed.csv por 'genre' e calculou o tempo total
 que nossos ouvintes passaram ouvindo cada gênero. 
 O resultado para cada 'genre', temos o tempo total ouvido. Ele está armazenado na variável time_by_genre 
@@ -893,5 +892,388 @@ time_by_genre = df.groupby('genre')['total_play'].sum()
 time_by_genre_sort = time_by_genre.sort_values(ascending=False) # Escreva seu código aqui
 
 print(time_by_genre_sort.head(10))
+
+
+
+
+'''PROJETO FINAL SPRINT 2'''
+
+'''Introdução 
+O trabalho de um analista é analisar dados para obter percepções valiosas dos dados e tomar decisões fundamentadas neles. Esse processo consiste em várias etapas, como visão geral dos dados, pré-processamento dos dados e testes de hipóteses.
+
+Sempre que fazemos uma pesquisa, precisamos formular uma hipótese que depois poderemos testar. Às vezes nós aceitamos essas hipóteses; outras vezes, nós as rejeitamos. Para fazer as escolhas certas, um negócio deve ser capaz de entender se está fazendo as suposições certas ou não.
+
+Neste projeto, você vai comparar as preferências musicais dos habitantes de Springfild e Shelbyville. Você vai estudar os dados de um serviço de streaming de música online para testar a hipótese apresentada abaixo e comparar o comportamento dos usuários dessas duas cidades.
+
+Objetivo:
+Teste a hipótese:
+
+A atividade dos usuários é diferente dependendo do dia da semana e da cidade.
+Etapas
+Os dados sobre o comportamento do usuário são armazenados no arquivo /datasets/music_project_en.csv. Não há informações sobre a qualidade dos dados, então será necessário examiná-los antes de testar a hipótese.
+
+Primeiro, você avaliará a qualidade dos dados e verá se seus problemas são significativos. Depois, durante o pré-processamento dos dados, você tentará tratar dos problemas mais críticos.
+
+O seu projeto consistirá em três etapas:
+
+Visão geral dos dados
+Pré-processamento de dados
+Teste da hipótese
+
+
+Etapa 1. Visão geral dos dados 
+Abra os dados e examine-os.
+
+Você precisará da pandas, então, importe-a.'''
+
+import pandas as pd
+
+print(pd)
+
+
+'''Leia o arquivo `music_project_en.csv` da pasta `/datasets/` e salve-o na variável `df`:'''
+
+# lendo o arquivo e armazenando em df
+df=pd.read_csv('/datasets/music_project_en.csv')
+print(df)
+
+
+'''Imprima as primeiras 10 linhas da tabela:'''
+
+# obtenha as 10 primeiras 10 linhas da tabela df
+print(df.head(10))
+
+
+'''Obtenha informações gerais sobre a tabela usando um comando. Você conhece o método para exibir informações gerais que precisamos obter.'''
+
+print(df.info())
+print(df.describe())
+
+
+'''Aqui estão as nossas observações sobre a tabela. Ela contém sete colunas. Elas armazenam o mesmo tipo de dado: object.
+
+De acordo com a documentação:
+
+' userID' — identificação do usuário
+'Track' — título da música
+'artist' — nome do artista
+'genre' — gênero da música
+'City' — cidade do usuário
+'time' — o tempo exato que a música foi reproduzida
+'Day' — dia da semana
+Podemos ver três problemas de estilo nos cabeçalhos da tabela:
+
+Alguns cabeçalhos são escritos em letras maiúsculas, outros estão em minúsculas.
+Alguns cabeçalhos contêm espaços.
+Detecte o problema e o descreva aqui: Acredito que a utilização do snake_case seja mais viável na primeira coluna (user_id)
+2.1. Escreva suas observações. Aqui estão algumas perguntas que podem ajudar: 
+1.   Que tipo de dados temos nas linhas? E como podemos entender as colunas? O tipo de dados nas linhas é object (analisar na célula 39 a execução dos atributos / métodos). As colunas também encontram-se nomeadas na célula 39. Além disso, podemos obter todos esses dados estruturais através do método info(), já executado na célula 22.
+
+2.   Esses dados são suficientes para responder à nossa hipótese ou precisamos de mais dados? Não, precisamos de mais dados, tais como: Média do tempo de reprodução por usuário, total de reprodução por usuário e cidade, total de reprodução por usuário e dia da semana, entre outros.
+
+3.   Você notou algum problema nos dados, como valores ausentes, duplicados ou tipos de dados errados Sim, é possível verificar a existência de valores ausentes e valores duplicados (Explícitos e Implícitos), através da atribuição dos métodos na célula 39.'''
+
+#Contagem de linhas e colunas
+print(df.shape)
+print()
+
+# Tipo de dados nas linhas
+print(df.dtypes)
+print()
+
+# Entender as Colunas
+print(df.columns)
+print()
+
+# Análise dos valores ausentes
+print(df.isna().sum())
+print()
+
+# Análise dos valores duplicados
+print(df.duplicated().sum()) # Duplicados explícitos
+print()
+print(df.nunique()) # Duplicados implícitos
+
+
+'''Etapa 2. Pré-processamento de dados 
+O objetivo aqui é preparar os dados para a análise. O primeiro passo é resolver todos os problemas com o cabeçalho. E então podemos passar para os valores ausentes e duplicados. Vamos começar.
+
+Corrija a formatação nos cabeçalhos da tabela.
+
+3.1. Estilo do cabeçalho 
+Imprima os cabeçalhos da tabela (os nomes das colunas):'''
+
+# imprima os nomes das colunas
+print(df.columns)
+
+
+'''Mude os cabeçalhos da tabela conforme as boas práticas de estilo:
+
+Todos os caracteres precisam estar com letras minúsculas
+Exclua espaços
+Se o nome tiver várias palavras, use snake_case
+Anteriormente, você aprendeu sobre uma maneira automatizada de renomear colunas. Vamos usá-la agora. Use o ciclo for para percorrer os nomes das colunas e transformar todos os caracteres em letras minúsculas. Após fazer isso, imprima os cabeçalhos da tabela novamente:'''
+
+# Percorrendo os cabeçalhos e convertendo tudo em minúsculos
+correct_col_names = []
+
+for wrong_name in df.columns:
+    lowered = wrong_name.lower()
+    correct_col_names.append(lowered)
+    
+df.columns = correct_col_names
+
+print(df.columns)
+
+
+'''Agora, usando a mesma abordagem, exclua os espaços no início e no final de cada nome de coluna e imprima os nomes das colunas novamente:'''
+
+# Percorrendo os cabeçalhos e removendo os espaços
+correct_col_names_two = []
+
+for new_name in df.columns:
+    stripped = new_name.strip()
+    correct_col_names_two.append(stripped)
+    
+df.columns = correct_col_names_two
+
+print(df.columns)
+
+
+'''Precisamos aplicar a regra de sublinhado no lugar de espaço à coluna userid. Deveria ser user_id. Renomeie essa coluna e imprima os nomes de todas as colunas quando terminar.'''
+
+df.rename(columns={"userid" : "user_id"},inplace=True)
+print(df)
+
+
+'''Verifique o resultado. Imprima os cabeçalhos novamente:'''
+
+# verificando o resultado: a lista de cabeçalhos
+print(df.columns)
+
+
+3.2. Valores Ausentes 
+'''Primeiro, encontre a quantidade de valores ausentes na tabela. Você precisa usar dois métodos em sequência para obter o número de valores ausentes.'''
+
+# calculando o número de valores ausentes
+print(df.isna().sum())
+
+
+'''Nem todos os valores ausentes afetam a pesquisa. Por exemplo, os valores ausentes em track e artist não são críticos. Você pode simplesmente substituí-los por valores padrão, como a string 'unknown'.
+
+Mas valores ausentes em 'genre' podem afetar a comparação de preferências musicais de Springfield e Shelbyville. Na vida real, seria útil descobrir as razões pelas quais os dados estão ausentes e tentar corrigi-los. Mas nós não temos essa possibilidade neste projeto. Então, você terá que:
+
+Preencha esses valores ausentes com um valor padrão
+Avalie em que medida os valores ausentes podem afetar sua análise
+Substitua os valores ausentes nas colunas 'track', 'artist' e 'genre' pela string 'unknown'. Como mostramos nas lições anteriores, a melhor maneira de fazer isso é criar uma lista para armazenar os nomes das colunas nas quais precisamos fazer a substituição. Em seguida, use essa lista e percorra as colunas nas quais a substituição seja necessária e faça a substituição.'''
+
+# percorrendo os cabeçalhos e substituindo valores ausentes por 'unknown'
+columns_to_replace = ['track','artist','genre']
+for col in columns_to_replace:
+    df[col].fillna('unknown',inplace=True)
+
+print(df)
+
+
+'''Agora verifique o resultado para ter certeza de que o conjunto de dados não contenha valores ausentes após a substituição. Para fazer isso, conte os valores ausentes novamente.'''
+
+# contando os valores ausentes
+print(df.isna().sum())
+
+
+'''3.3. Duplicados 
+Encontre o número de duplicados explícitos na tabela. Lembre-se de que você precisa aplicar dois métodos em sequência para obter o número de duplicados explícitos.'''
+
+# contando duplicados explícitos
+print(df.duplicated().sum())
+
+
+'''Agora descarte todos os duplicados. Para fazer isso, chame o método que faz exatamente isso'''
+
+# removendo duplicados explícitos
+df = df.drop_duplicates().reset_index(drop=True)
+
+
+'''Agora vamos verificar se descartamos todos os duplicados. Conte duplicados explícitos mais uma vez para ter certeza de que você removeu todos eles:'''
+
+# verificando duplicados novamente
+print(df.duplicated().sum())
+
+
+'''Agora queremos nos livrar dos duplicados implícitos na coluna genre. Por exemplo, o nome de um gênero pode ser escrito de maneiras diferentes. Alguns erros afetarão também o resultado.
+
+Para fazer isso, vamos começar imprimindo uma lista de nomes de gênero únicos, ordenados em ordem alfabética: Para fazer isso:
+
+Extraia a coluna genre do DataFrame
+Chame o método que retornará todos os valores únicos na coluna extraída'''
+
+# visualizando nomes de gêneros únicos
+print(df['genre'].unique())
+
+
+'''Olhe a lista e encontre duplicados implícitos do gênero hiphop. Esses podem ser nomes escritos incorretamente, ou nomes alternativos para o mesmo gênero.
+
+Você verá os seguintes duplicados implícitos:
+
+hip
+hop
+hip-hop
+Para se livrar deles, crie uma função replace_wrong_genres() com dois parâmetros:
+
+wrong_genres= — essa é uma lista que contém todos os valores que você precisa substituir
+correct_genre= — essa é uma string que você vai usar para a substituição
+Como resultado, a função deve corrigir os nomes na coluna 'genre' da tabela df, isto é, substituindo cada valor da lista wrong_genres por valores de correct_genre.
+
+Dentro do corpo da função, use um ciclo 'for' para percorrer a lista de gêneros errados, extrair a coluna 'genre' e aplicar o método replace para fazer as correções.
+
+Agora, chame a função replace_wrong_genres() e passe argumentos apropriados para que ela limpe duplicados implícitos (hip, hop e hip-hop) substituindo-os por hiphop:'''
+
+# removendo duplicados implícitos
+def replace_wrong_genres(df, column, wrong_genres, correct_genre):
+    for wrong_genre in wrong_genres:
+        df[column] = df[column].replace(wrong_genre, correct_genre)
+    return df
+
+duplicates = ['hip', 'hop', 'hip-hop']
+genre = 'hiphop'
+df = replace_wrong_genres(df, 'genre', duplicates, genre)
+print(df['genre'])
+
+
+'''Certifique-se que os nomes duplicados foram removidos. Imprima a lista de valores únicos da coluna 'genre' mais uma vez:'''
+
+# verificando valores duplicados
+print(sorted(df['genre'].unique()))
+
+
+'''3.4. Suas observações 
+ Descreva brevemente o que você reparou ao analisar duplicados, bem como a abordagem que usou para eliminá-los e os resultados que alcançou.
+
+O processamento de dados duplicados promove uma análise mais assertiva.
+
+Para os duplicados Explícitos, foi utilizado o método duplicated() combinado com o método sum(), a fim de calcular o total de dados duplicados. Para eleminar os duplicados explícitos, foi utilizado o método drop_duplicates(), combinado com o método reset_index (drop=True). O objetivo deste segundo método é descartar a coluna index criada com o antigo ordenamento, a fim de que somente o ordenamento atual seja considerado.
+
+Para os duplicados implícitos, cuja análise necessita de mais atenção, será necessário utilizar o método unique(), a fim de que sejam listados os valores únicos. Também pode ser utilizado o método nunique() para contabilização destes valores únicos. Para processamento dos duplicados implícitos, precisamos atribuir o método replace. Neste caso, como temos um grande volume de valores a ser alterado, precisamos criar uma função. Desta forma, tendo informações tais como os valores duplicados como fonte incorreta, o valor a ser utilizado como correção, a coluna a receber a alteração e o DataFrame, podemos criar uma função que otimizará todo processo.'''
+
+
+'''Etapa 3. Teste da hipótese 
+4.1. Hipótese: comparação do comportamento dos usuários nas duas cidades 
+A hipótese afirma que existem diferenças no consumo de música pelos usuários em Springfield e em Shelbyville. Para testar a hipótese, use os dados dos três dias da semana: segunda-feira (Monday), quarta-feira (Wednesday) e sexta-feira (Friday).
+
+Agrupe os usuários por cidade.
+Compare o número de músicas tocadas por cada grupo na segunda, quarta e sexta.
+Execute cada cálculo separadamente.
+
+O primeiro passo é avaliar a atividade dos usuários em cada cidade. Não se esqueça das etapas "divisão-aplicação-combinação" sobre as quais falamos anteriormente na lição. Agora seu objetivo é agrupar os dados por cidade, aplicar o método de contagem apropriado durante a etapa de aplicação e então encontrar o número de músicas tocadas por cada grupo, especificando a coluna para a qual você quer obter a contagem.
+
+Veja um exemplo de como o resultado final deve ser: df.groupby(by='....')['column'].method() Execute cada cálculo separadamente.
+
+Para avaliar a atividade dos usuários em cada cidade, agrupe os dados por cidade e encontre o número de músicas reproduzidas em cada grupo.'''
+
+#imprimindo as colunas
+print(df.columns)
+
+
+# Contando as músicas tocadas em cada cidade
+df_gcity = df
+print(df_gcity.groupby(by='city'))
+print()
+print(df_gcity.groupby(by='city').count())
+
+
+'''Comente sobre suas observações aqui
+
+**Foi criado um novo DataFrame contendo a divisão das informações gerais (user_id, track, artist, genre, time e day) por cidade (argumento).
+
+Agora vamos agrupar os dados por dia da semana e encontrar a quantidade de músicas tocadas na segunda, quarta e sexta-feira. Use a mesma abordagem que antes, mas agora precisamos agrupar os dados de uma forma diferente'''
+
+# Calculando as músicas escutadas em cada um desses três dias
+df_gday = df
+df_gday = df_gday.groupby(by='day') ['track'].count()
+
+print(df_gday)
+
+# Considerando a análise geral tendo como argumento os dias da semana.
+df_gday = df
+df_gday = df_gday.groupby(by='day').count()
+
+print(df_gday)
+
+
+'''Comente sobre suas observações aqui
+
+Foi criado um novo DataFrame contendo a divisão da quantidade total de músicas tocadas (Coluna track) por cada dia da semana contido na coluna 'day'.
+
+Você acabou de aprender como contar entradas agrupando-as por cidade ou por dia. E agora você precisa escrever uma função que possa contar entradas simultaneamente com base em ambos os critérios.
+
+Crie a função number_tracks() para calcular o número de músicas tocadas em um determinado dia e em uma determinada cidade. A função deve aceitar dois parâmetros:
+
+day: um dia da semana pelo qual precisamos filtrar os dados. Por exemplo, 'Monday'.
+city: uma cidade pela qual precisamos filtrar os dados. Por exemplo, 'Springfield'.
+Dentro da função, você vai aplicar uma filtragem consecutiva com indexação lógica.
+
+Primeiro, filtre os dados por dia e então filtre a tabela resultante por cidade.
+
+Depois de filtrar os dados usando os dois critérios, conte o número de valores na coluna 'user_id' da tabela resultante. O resultado da contagem representará o número de entradas que você quer encontrar. Armazene o resultado em uma nova variável e imprima-o.'''
+
+print(df['day'] == 'Monday')
+print()
+print(df['city'] == 'Springfield')
+
+
+# Declare a função number_tracks() com dois parâmetros: day= e city=.
+def number_tracks(day, city):
+    days = df[df['day'] == day] # Armazene as linhas do DataFrame em que o valor na coluna 'day' é igual ao parâmetro day=
+    cities = days[days['city'] == city] # Filtre as linhas em que o valor na coluna 'city' é igual ao parâmetro city=
+    df_user_id = cities['user_id'].count() #df_user_id =  # Extraia a coluna 'user_id' da tabela filtrada e aplique o método count()
+    return df_user_id # Retorne o número dos valores da coluna 'user_id'
+
+
+# Declare a função number_tracks() com dois parâmetros: day= e city=.
+def number_tracks_2(day,city):
+    filtered_df = df[(df['day'] == day) & (df['city'] == city)]
+    count = filtered_df['user_id'].count()
+    return count
+
+
+'''Chame a função number_tracks() seis vezes, mudando os valores dos parâmetros, para que você possa recuperar os dados de ambas as cidades para cada um dos três dias'''
+
+# a quantidade de músicas tocadas em Springfield na segunda-feira
+number_tracks_one = number_tracks('Monday','Springfield')
+print(number_tracks_one)
+
+# a quantidade de músicas tocadas em Shelbyville na segunda-feira
+number_tracks_two = number_tracks ('Monday','Shelbyville')
+print(number_tracks_two)
+
+# a quantidade de músicas tocadas em Springfield na quarta-feira
+number_tracks_three = number_tracks ('Wednesday','Springfield')
+print(number_tracks_three)
+
+# a quantidade de músicas tocadas em Shelbyville na quarta-feira
+number_tracks_four = number_tracks ('Wednesday','Shelbyville')
+print(number_tracks_four)
+
+# a quantidade de músicas tocadas em Springfield na sexta-feira
+number_tracks_five = number_tracks ('Friday','Springfield')
+print(number_tracks_five)
+
+# a quantidade de músicas tocadas em Shelbyville na sexta-feira
+number_tracks_six = number_tracks ('Friday','Shelbyville')
+print(number_tracks_six)
+
+
+'''Conclusões
+
+Comente sobre se a terceira hipótese está correta ou deve ser rejeitada. Explique seu raciocínio.
+
+A terceira hipótese encontra-se correta. Nota-se que a cidade de Springfield possui uma maior atividade do que a cidade de Shelbyville'''
+
+'''Conclusões 
+Resuma suas conclusões sobre a hipótese aqui
+
+Hipótese: A atividade dos usuários é diferente dependendo do dia da semana e da cidade.
+
+Nota-se que a cidade de Springfield possui uma maior atividade do que a cidade de Shelbyville. Quando comparamos os dias da semana na cidade de Springfield, nota-se uma maior atividade as Sextas-Feiras, enquanto que quando comparamos os dias da semana na cidade de Shelbyville, nota-se uma maior atividade as Quartas-Feiras. *Sendo assim, a atividade dos usuários pode sim ser diferente dependendo do dia da semana e da cidade.'''
 
 
