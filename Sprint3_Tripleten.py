@@ -68,5 +68,216 @@ print(df_categories)
 
 
 
-'''LIÇÃO 4 - Olhando para os nossos dados'''
+'''LIÇÃO 4 - Olhando para os nossos dados
+
+Tarefa 1
+O pré-código já inclui código para imprimir as primeiras 5 linhas do conjunto de dados de usinas usando o método head(). Escreva um código que:
+
+tenha uma amostra de 5 linhas aleatórias do conjunto de dados e as armazene na variável sample. Use random_state=543210 para a amostragem.
+imprima a variável sample.
+'''
+import pandas as pd
+
+column_names = [
+    'country',
+    'name',
+    'capacity_mw',
+    'latitude',
+    'longitude',
+    'primary_fuel',
+    'owner'
+]
+data = pd.read_csv(
+    '/datasets/gpp_modified.csv',
+    sep='|',
+    header=None,
+    names=column_names,
+    decimal=',',
+)
+
+print(data.head())
+print()
+
+sample = data.sample(5,random_state=543210)# escreva seu código aqui
+print(sample)
+
+
+'''Tarefa 2
+Agora que temos uma noção de como são os dados em cada coluna, confira a informação geral sobre esse conjunto de dados chamando o método info(). Incluímos o código da última tarefa para que você possa comparar lado a lado as linhas da amostra com o resultado de info().'''
+
+import pandas as pd
+
+column_names = [
+    'country',
+    'name',
+    'capacity_mw',
+    'latitude',
+    'longitude',
+    'primary_fuel',
+    'owner'
+]
+data = pd.read_csv(
+    '/datasets/gpp_modified.csv',
+    sep='|',
+    header=None,
+    names=column_names,
+    decimal=',',
+)
+
+sample = data.sample(5, random_state=543210)
+print(sample)
+print()
+
+data.info()
+
+
+
+'''LIÇÃO 5 - Descrições numéricas e Describe()
+
+
+Tarefa 01
+Obtenha uma visão geral apenas da coluna 'primary_fuel' chamando describe() nela e imprimindo o resultado. O conjunto de dados já foi lido corretamente para você no pré-código.
+'''
+import pandas as pd
+
+column_names = [
+    'country',
+    'name',
+    'capacity_mw',
+    'latitude',
+    'longitude',
+    'primary_fuel',
+    'owner'
+]
+data = pd.read_csv(
+    '/datasets/gpp_modified.csv',
+    sep='|',
+    header=None,
+    names=column_names,
+    decimal=',',
+)
+
+print(data['primary_fuel'].describe())
+
+
+'''
+Tarefa 02
+No resultado da tarefa anterior, descobrimos que existem 15 valores únicos na coluna 'primary_fuel'. Vamos verificar isso agora. Para fazer isso, chame o método nunique() nessa coluna. Atribua o resultado a uma variável chamada unique e imprima-a na tela.
+'''
+import pandas as pd
+
+column_names = [
+    'country',
+    'name',
+    'capacity_mw',
+    'latitude',
+    'longitude',
+    'primary_fuel',
+    'owner'
+]
+data = pd.read_csv(
+    '/datasets/gpp_modified.csv',
+    sep='|',
+    header=None,
+    names=column_names,
+    decimal=',',
+)
+
+unique = data['primary_fuel'].nunique()# escreva seu código aqui
+print(unique)
+
+
+'''Tarefa 03
+Agora verifique se o valor mais comum na coluna 'primary_fuel' realmente é 'Solar'. Para fazer isso:
+
+Filtre o DataFrame original, extraindo apenas as linhas em que 'primary_fuel' é igual a 'Solar' e armazene-o na variável solar_data.
+Verifique a forma do DataFrame obtido e o armazene na variável solar_shape.
+Imprima a variável.
+'''
+import pandas as pd
+
+column_names = [
+    'country',
+    'name',
+    'capacity_mw',
+    'latitude',
+    'longitude',
+    'primary_fuel',
+    'owner'
+]
+data = pd.read_csv(
+    '/datasets/gpp_modified.csv',
+    sep='|',
+    header=None,
+    names=column_names,
+    decimal=',',
+)
+
+solar_data = data[data['primary_fuel'] == 'Solar']# escreva seu código aqui
+solar_shape = solar_shape = solar_data.shape# escreva seu código aqui
+print(solar_shape)
+
+
+
+
+'''CAPÍTULO 3 - TRATAMENTO DE VALORES AUSENTES E DUPLICADOS
+
+
+LIÇÃO 2 - Contagem de valores ausentes
+
+Nunca é uma má ideia chamar info() em um novo conjunto de dados. Vamos verificar isso no DataFrame dos logs dos visitantes, que associamos a uma variável chamada df_logs:
+'''
+import pandas as pd
+
+df_logs = pd.read_csv('/datasets/visit_log.csv')
+
+print(df_logs.info())
+
+
+'''Qual método aprendemos no sprint de Python básico para encontrar e contar valores ausentes?
+'''
+import pandas as pd
+
+df_logs = pd.read_csv('/datasets/visit_log.csv')
+print(df_logs.isna().sum())
+
+
+'''Vamos chamá-lo na coluna 'source' do DataFrame, incluindo os valores ausentes:
+'''
+import pandas as pd
+
+df_logs = pd.read_csv('/datasets/visit_log.csv')
+print(df_logs['source'].value_counts(dropna=False))
+
+
+'''Tarefa 1
+Aplique o método value_counts() à coluna 'email' e armazene o resultado na variável email_values. Dessa vez, não inclua os valores ausentes no resultado. Imprima o resultado.
+'''
+import pandas as pd
+
+df_logs = pd.read_csv('/datasets/visit_log.csv')
+
+email_values = df_logs['email'].value_counts() # escreva seu código aqui
+
+print(email_values)
+
+
+'''Tarefa 2
+Agora vamos tentar ordenar os resultados por índice, e não por valor, para ver se isso acrescenta algum significado aos valores da coluna 'email'. Reescreva a variável email_values usando a ordenação e imprima o resultado.
+'''
+import pandas as pd
+
+df_logs = pd.read_csv('/datasets/visit_log.csv')
+
+email_values = df_logs['email'].value_counts()
+email_values = df_logs['email'].value_counts().sort_index() # escreva seu código aqui
+
+print(email_values)
+
+
+'''LIÇÃO 03 - Filtragem de DataFrames para lidar com valores ausentes
+
+'''
+
+
 
